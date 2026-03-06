@@ -1,0 +1,37 @@
+
+a[href="/shorts/"] {
+    display: none !important;
+}
+
+
+ytd-rich-shelf-renderer {
+    display: none !important;
+}
+
+
+#scroll-outer-container {
+    display: none !important;
+}
+
+
+grid-shelf-view-model {
+    display: none !important;
+}
+
+
+ytd-rich-shelf-renderer #dismissible {
+    display: none !important;
+}
+
+
+a[href^="/shorts/"] {
+    display: none !important;
+}
+
+ytd-rich-item-renderer:has(a[href^="/shorts/"]) {
+    display: none !important;
+}
+
+ytd-guide-entry-renderer a[title="Shorts"] {
+    display: none !important;
+}
