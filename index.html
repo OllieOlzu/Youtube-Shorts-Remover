@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>YT Shorts Remover – Official Extension Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="YT Shorts Remover is a Chrome extension that hides YouTube Shorts sections, blocks /shorts pages, and stops the endless Shorts scroll.">
+
+    <link rel="icon" type="image/png" href="icon.png">
+
+    <style>
+        :root {
+            --color-bg: #ffffff;
+            --color-surface: #f5f5f5;
+            --color-border: #d4d4d4;
+            --color-border-soft: #e5e5e5;
+            --color-text-main: #111827;
+            --color-text-muted: #6b7280;
+            --color-primary: #2563eb;
+            --color-primary-dark: #1d4ed8;
+            --color-primary-soft: #eff6ff;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-text-main);
+        }
+
+        .page {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 32px 16px 40px;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        header img {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+        }
+
+        header h1 {
+            margin: 0 0 4px;
+            font-size: 26px;
+            font-weight: 600;
+        }
+
+        header p {
+            margin: 0;
+            color: var(--color-text-muted);
+            font-size: 14px;
+        }
+
+        main {
+            background-color: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            padding: 20px 18px 22px;
+        }
+
+        .intro {
+            margin-bottom: 18px;
+        }
+
+        .intro p {
+            margin: 0;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 18px 0 22px;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 9px 16px;
+            border-radius: 999px;
+            border: 1px solid transparent;
+            font-size: 14px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .button-primary {
+            background-color: var(--color-primary);
+            color: #ffffff;
+            border-color: var(--color-primary-dark);
+        }
+
+        .button-primary:hover {
+            background-color: var(--color-primary-dark);
+        }
+
+        .button-secondary {
+            background-color: #ffffff;
+            color: var(--color-text-main);
+            border-color: var(--color-border);
+        }
+
+        .button-secondary:hover {
+            background-color: #f9fafb;
+        }
+
+        .button-subtext {
+            font-size: 11px;
+            color: var(--color-text-muted);
+        }
+
+        .sections {
+            display: grid;
+            grid-template-columns: minmax(0, 2.2fr) minmax(0, 2fr);
+            gap: 18px;
+        }
+
+        @media (max-width: 800px) {
+            .sections {
+                grid-template-columns: minmax(0, 1fr);
+            }
+        }
+
+        section {
+            background-color: #ffffff;
+            border-radius: 10px;
+            border: 1px solid var(--color-border-soft);
+            padding: 14px 14px 16px;
+        }
+
+        section h2 {
+            margin: 0 0 8px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        section p {
+            margin: 0 0 8px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--color-text-muted);
+        }
+
+        ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+
+        li {
+            font-size: 14px;
+            line-height: 1.5;
+            color: var(--color-text-muted);
+            margin-bottom: 6px;
+        }
+
+        code {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 13px;
+            background-color: var(--color-primary-soft);
+            padding: 1px 4px;
+            border-radius: 4px;
+        }
+
+        .panel {
+            border-radius: 8px;
+            border: 1px solid var(--color-border-soft);
+            padding: 10px 12px 11px;
+            background-color: #f9fafb;
+        }
+
+        .panel h3 {
+            margin: 0 0 6px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .toggle-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .toggle-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .toggle-label {
+            margin-right: 8px;
+        }
+
+        .toggle-note {
+            font-size: 12px;
+            color: var(--color-text-muted);
+            margin-top: 6px;
+        }
+
+        .footer {
+            margin-top: 16px;
+            font-size: 12px;
+            color: var(--color-text-muted);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: space-between;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                align-items: flex-start;
+            }
+
+            .footer {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header>
+            <img src="icon.png" alt="YT Shorts Remover icon">
+            <div>
+                <h1>YT Shorts Remover</h1>
+                <p>Chrome extension for a cleaner, more focused YouTube experience.</p>
+            </div>
+        </header>
+
+        <main>
+            <div class="intro">
+                <p>
+                    <strong>YT Shorts Remover</strong> hides YouTube Shorts sections and links, can block
+                    <code>/shorts</code> pages with an optional redirect, and stops Shorts from endlessly scrolling – all
+                    controlled with three simple settings.
+                </p>
+            </div>
+
+            <div class="actions">
+                <!-- Replace these href values with your actual URLs before publishing -->
+                <a class="button button-primary" href="YOUR_CHROME_WEB_STORE_URL_HERE" target="_blank" rel="noopener noreferrer">
+                    <span>Add to Chrome</span>
+                </a>
+                <a class="button button-secondary" href="YOUR_GITHUB_REPOSITORY_URL_HERE" target="_blank" rel="noopener noreferrer">
+                    <span>View source on GitHub</span>
+                </a>
+            </div>
+
+            <div class="sections">
+                <section aria-labelledby="section-overview">
+                    <h2 id="section-overview">What the extension does</h2>
+                    <p>
+                        The extension directly adjusts how Shorts appear and behave on YouTube so you can keep full‑length
+                        videos front and center.
+                    </p>
+                    <ul>
+                        <li>
+                            <strong>Hide Shorts across YouTube pages</strong> – Removes Shorts shelves and carousels from
+                            the homepage and other feeds, hides video tiles that link to <code>/shorts/…</code>, and
+                            hides the Shorts button in the sidebar.
+                        </li>
+                        <li>
+                            <strong>Block Shorts pages with redirect</strong> – When you open a
+                            <code>youtube.com/shorts/…</code> link, the extension can automatically redirect you back to
+                            the main YouTube site. A small “Short blocked!” alert lets you know why the page changed.
+                        </li>
+                        <li>
+                            <strong>Stop endless scrolling in Shorts</strong> – If you do open the Shorts player, the
+                            extension can remove all but the first Short in the sequence, effectively stopping the
+                            vertical infinite scroll of new Shorts.
+                        </li>
+                    </ul>
+                </section>
+
+                <section aria-labelledby="section-controls">
+                    <h2 id="section-controls">How it works</h2>
+                    <p>
+                        All behavior is controlled by the popup that opens when you click the extension icon in Chrome.
+                        There are three independent settings:
+                    </p>
+
+                    <div class="panel">
+                        <h3>Popup controls</h3>
+                        <ul class="toggle-list">
+                            <li class="toggle-item">
+                                <span class="toggle-label"><strong>Stop Scrolling</strong></span>
+                                <span>On / Off</span>
+                            </li>
+                            <li class="toggle-item">
+                                <span class="toggle-label"><strong>Remove shorts from pages</strong></span>
+                                <span>On / Off</span>
+                            </li>
+                            <li class="toggle-item">
+                                <span class="toggle-label"><strong>Redirect Shorts to YouTube</strong></span>
+                                <span>On / Off</span>
+                            </li>
+                        </ul>
+                        <p class="toggle-note">
+                            All three options are enabled by default. You can turn any feature on or off at any time
+                            without reloading the extension.
+                        </p>
+                    </div>
+                </section>
+            </div>
+
+            <div class="footer">
+                <span>Designed for desktop Chrome and the current YouTube layout.</span>
+                <span>Settings are stored using Chrome’s sync storage and only affect <code>youtube.com</code>.</span>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
+
